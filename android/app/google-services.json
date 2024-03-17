@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1069895383899",
+    "project_id": "sober-steps-fire",
+    "storage_bucket": "sober-steps-fire.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1069895383899:android:dd11ff7a4e828e15a3387e",
+        "android_client_info": {
+          "package_name": "com.tammeir.group.sober_steps"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM5nqsj0p_ERobW29xAQmJostvFaUwFJc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
