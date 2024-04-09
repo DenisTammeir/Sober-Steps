@@ -1,7 +1,7 @@
-
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:sober_steps/modules/auth/sign_up.dart';
+import 'package:sober_steps/modules/widgets/bottom_bar.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -9,7 +9,66 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  bool _isPasswordVisible = false;
+  final email = TextEditingController();
+  final password = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  var _isPasswordVisible = true;
+
+  void wrongEmailMsg() {
+    final snackBar = SnackBar(
+      content: const Text('No user found.'),
+      duration: const Duration(seconds: 3),
+      backgroundColor: Theme.of(context).primaryColor,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+  void wrongPasswordMsg() {
+    final snackBar = SnackBar(
+      content: const Text('Wrong password.'),
+      duration: const Duration(seconds: 3),
+      backgroundColor: Theme.of(context).indicatorColor,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+
+   void signin() async {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: Colors.greenAccent,
+              backgroundColor: Colors.grey,
+            ),
+          );
+        });
+    try {
+      final user = (await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email.text.trim(),
+        password: password.text.trim(),
+      ))
+          .user;
+
+      Navigator.pop(context) ;
+
+      if (user != null) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => BottomBar()));
+      }
+    } on FirebaseAuthException catch (e) {
+      Navigator.pop(context);
+      if (e.code == 'user-not-found') {
+        // Username Test
+        wrongEmailMsg();
+      } else if (e.code == 'wrong-password') {
+        // Password Test
+
+        wrongPasswordMsg();
+      }
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -44,40 +103,47 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 child: SingleChildScrollView(
                   child: Form(
+                    key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       mainAxisAlignment: MainAxisAlignment.center,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                                                Container(
-                            padding: const EdgeInsets.all(10),
-                            alignment: Alignment.centerLeft,
-                            child:  Text(
-                              'Welcome Back',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.grey[700],
-                                fontSize: 20,
-                              ),
+                        Container(
+                          padding: const EdgeInsets.all(10),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            'Welcome Back',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.grey[700],
+                              fontSize: 20,
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         TextFormField(
+                          controller: email,
                           decoration: InputDecoration(
                             labelText: 'Email',
                           ),
                           keyboardType: TextInputType.emailAddress,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
+                              return 'Please add an email!!';
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) {
+                              return 'Please enter a valid email!!';
                             }
                             return null;
                           },
                         ),
                         SizedBox(height: 20.0),
                         TextFormField(
+                          controller: password,
                           obscureText: !_isPasswordVisible,
                           decoration: InputDecoration(
                             labelText: 'Password',
@@ -104,8 +170,14 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         SizedBox(height: 20.0),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
                             // Implement login logic here
+                              final isValid =
+                                        _formKey.currentState!.validate();
+                                    if (isValid) {
+                                      signin();
+                                    }
+                           
                           },
                           child: Text('Log In'),
                         ),
@@ -113,7 +185,10 @@ class _LoginPageState extends State<LoginPage> {
                         TextButton(
                           onPressed: () {
                             // Navigate to sign-up page
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context) => SignUpPage(),));;
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SignUpPage(),
+                            ));
+                            ;
                           },
                           child: Text('Don\'t have an account? Sign up'),
                         ),

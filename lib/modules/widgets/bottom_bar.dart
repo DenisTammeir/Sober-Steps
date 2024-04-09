@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sober_steps/modules/communities/community_tab.dart';
 import 'package:sober_steps/modules/goals/goal_days.dart';
 import 'package:sober_steps/modules/homepage/home.dart';
 import 'package:sober_steps/modules/motivation/quote_view.dart';
@@ -25,6 +26,7 @@ class _BottomBarState extends State<BottomBar> {
       ),
       // ViewGoals(),
       DaysListScreen(),
+      CommunityTab(),
       MotivationalQuotesPage(),
       // AssessmentPage(),
       ProfilePage(),
@@ -55,25 +57,33 @@ class _BottomBarState extends State<BottomBar> {
                     });
                   },
                 ),
-                InkWell(
-                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => About(),
-                  )),
-                  child: Container(
-                    width: 25,
-                    // color: Colors.blue,
-                    child: Text(
-                      'Sober\nSteps',
-                      style:
-                          TextStyle(fontSize: 6, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ), // Spacer for the middle item
+                IconButton(
+                  icon: const Icon(Icons.people_outline_outlined),
+                  onPressed: () {
+                    setState(() {
+                      _selectedIndex = 2;
+                    });
+                  },
+                ),
+                // InkWell(
+                //   onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                //     builder: (context) => About(),
+                //   )),
+                //   child: Container(
+                //     width: 25,
+                //     // color: Colors.blue,
+                //     child: Text(
+                //       'Sober\nSteps',
+                //       style:
+                //           TextStyle(fontSize: 6, fontWeight: FontWeight.bold),
+                //     ),
+                //   ),
+                // ), // Spacer for the middle item
                 IconButton(
                   icon: const Icon(Icons.energy_savings_leaf_outlined),
                   onPressed: () {
                     setState(() {
-                      _selectedIndex = 2;
+                      _selectedIndex = 3;
                     });
                   },
                 ),
@@ -81,7 +91,7 @@ class _BottomBarState extends State<BottomBar> {
                   icon: const Icon(Icons.person),
                   onPressed: () {
                     setState(() {
-                      _selectedIndex = 3;
+                      _selectedIndex = 4;
                     });
                   },
                 ),

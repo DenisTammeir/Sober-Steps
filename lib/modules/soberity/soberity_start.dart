@@ -21,15 +21,16 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-                 backgroundColor: Theme.of(context).colorScheme.background,
-         elevation: 3,
-        title: Text('    Soberity Start',
-         style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.grey[100],
-                  ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 3,
+        title: Text(
+          '    Soberity Start',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Colors.grey[100],
+          ),
         ),
       ),
       body: Padding(
@@ -114,8 +115,10 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
             SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () async {
-                if ((drinkAddiction != null && drinkStartDate != null) ||
-                    (smokeAddiction != null && smokeStartDate != null)) {
+                if (((drinkAddiction != null && drinkStartDate != null) ||
+                        (smokeAddiction != null && smokeStartDate != null)) &&
+                    ((drinkAddiction != null && smokeAddiction == null) ||
+                        (drinkAddiction == null && smokeAddiction != null))) {
                   try {
                     List<Map<String, dynamic>> addictionList = [];
                     if (drinkAddiction != null) {
@@ -130,7 +133,10 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
                         'start_date': smokeStartDate,
                       });
                     }
-                    await _firestore.collection('sobriety').doc(_auth.currentUser!.uid).set({
+                    await _firestore
+                        .collection('sobriety')
+                        .doc(_auth.currentUser!.uid)
+                        .set({
                       'uid': _auth.currentUser!.uid,
                       'addictions': addictionList,
                     });
@@ -140,8 +146,8 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
                           content:
                               Text('Sobriety start data added to Firebase!')),
                     );
-                     Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) =>  BottomBar()));
+                    Navigator.of(context).push(
+                        MaterialPageRoute(builder: (context) => BottomBar()));
                   } catch (e) {
                     print('Error adding sobriety start data: $e');
                   }

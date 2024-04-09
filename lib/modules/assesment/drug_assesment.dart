@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:sober_steps/modules/assesment/day_assesment.dart';
 
 class AssessmentPage extends StatefulWidget {
+  final bool hasReviewed;
+
+  const AssessmentPage({super.key, required this.hasReviewed});
   @override
   _AssessmentPageState createState() => _AssessmentPageState();
 }
@@ -74,15 +77,16 @@ class _AssessmentPageState extends State<AssessmentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: Theme.of(context).colorScheme.background,
-         elevation: 3,
-         title: Text('   Daily Assessment',
-         style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.grey[100],
-                  ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 3,
+        title: Text(
+          '   Daily Assessment',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Colors.grey[100],
+          ),
         ),
       ),
       body: Padding(
@@ -213,7 +217,8 @@ class _AssessmentPageState extends State<AssessmentPage> {
                       positiveSmoke: !hasSmokedTobacco,
                       // smokeAddiction: ,
                       // drinkAddiction: null,
-                      smokeStartDate: smokeDate, drinkStartDate: drinkDate, smoke: hasSmoke, drink: hasDrink,
+                      smokeStartDate: smokeDate, drinkStartDate: drinkDate,
+                      smoke: hasSmoke, drink: hasDrink, hasReviewed: widget.hasReviewed,
                     ),
                   ));
                 },

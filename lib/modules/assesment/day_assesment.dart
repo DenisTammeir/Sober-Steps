@@ -8,9 +8,10 @@ class DailyAssessmentPage extends StatefulWidget {
   final drink;
   final smokeStartDate;
   final drinkStartDate;
+  final bool hasReviewed;
 
   const DailyAssessmentPage(
-      {super.key, required this.positiveDrink, required this.positiveSmoke,   required this.smokeStartDate, required this.drinkStartDate, required this.smoke, required this.drink});
+      {super.key, required this.positiveDrink, required this.positiveSmoke,   required this.smokeStartDate, required this.drinkStartDate, required this.smoke, required this.drink, required this.hasReviewed});
   @override
   _DailyAssessmentPageState createState() => _DailyAssessmentPageState();
 }
@@ -133,7 +134,7 @@ class _DailyAssessmentPageState extends State<DailyAssessmentPage> {
                       builder: (context) => MotivationalQuotesPage(
                         mood: '${_emojiDescriptions[_selectedRating]}',
                         positiveDrink: widget.positiveDrink,
-                        positiveSmoke: widget.positiveSmoke, smokeStartDate: widget.smokeStartDate, drinkStartDate: widget.drinkStartDate, drink: widget.drink, smoke: widget.smoke,
+                        positiveSmoke: widget.positiveSmoke, smokeStartDate: widget.smokeStartDate, drinkStartDate: widget.drinkStartDate, drink: widget.drink, smoke: widget.smoke, hasReviewed: widget.hasReviewed,
                       ),
                     ));
                   } else {

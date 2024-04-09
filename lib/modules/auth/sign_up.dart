@@ -11,11 +11,10 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
   bool _isPasswordVisible = false;
-   final _username = TextEditingController();
-   final _email = TextEditingController();
+  final _username = TextEditingController();
+  final _email = TextEditingController();
   final _password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-
 
   void userEmail() {
     final snackBar = SnackBar(
@@ -35,7 +34,7 @@ class _SignUpPageState extends State<SignUpPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-Future<void> signUp() async {
+  Future<void> signUp() async {
     try {
       UserCredential user =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
@@ -51,11 +50,10 @@ Future<void> signUp() async {
         'userid': uid,
         'profile': '',
         'createdAt': FieldValue.serverTimestamp(),
-        
       });
 
       Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) =>  SobrietyStartPage()));
+          .push(MaterialPageRoute(builder: (context) => SobrietyStartPage()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
         // Username Test
@@ -66,6 +64,7 @@ Future<void> signUp() async {
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,7 +106,7 @@ Future<void> signUp() async {
                         Container(
                           padding: const EdgeInsets.all(10),
                           alignment: Alignment.centerLeft,
-                          child:  Text(
+                          child: Text(
                             'Create Account',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -120,7 +119,7 @@ Future<void> signUp() async {
                           height: 20,
                         ),
                         TextFormField(
-                          controller:  _username,
+                          controller: _username,
                           decoration: const InputDecoration(
                             labelText: 'Username',
                           ),
@@ -128,7 +127,16 @@ Future<void> signUp() async {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your username';
+                            } else if (value.length > 16) {
+                              return 'Username must not exceed 16 characters';
+                            } else if (!RegExp(r'^[a-zA-Z0-9_]+$')
+                                .hasMatch(value)) {
+                              return 'Invalid charactersets!!';
                             }
+                            if (!RegExp(r'[a-zA-Z]').hasMatch(value)) {
+                              return 'Username must contain at least one letter!';
+                            }
+
                             return null;
                           },
                         ),
@@ -142,6 +150,10 @@ Future<void> signUp() async {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                .hasMatch(value)) {
+                              return 'Please enter a valid email!!';
                             }
                             return null;
                           },
@@ -169,6 +181,8 @@ Future<void> signUp() async {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your password';
+                            } else if (value.length < 8) {
+                              return 'Password must be more than eight characters long';
                             }
                             return null;
                           },
@@ -176,19 +190,20 @@ Future<void> signUp() async {
                         const SizedBox(height: 20.0),
                         ElevatedButton(
                           onPressed: () {
-                                    final isValid =
-                                        _formKey.currentState!.validate();
-                                    if (isValid) {
-                                      signUp();
-                                    }
-                                  },
+                            final isValid = _formKey.currentState!.validate();
+                            if (isValid) {
+                              signUp();
+                            }
+                          },
                           child: const Text('Sign Up'),
                         ),
                         const SizedBox(height: 20.0),
                         TextButton(
                           onPressed: () {
                             // Navigate to login page
-                           Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginPage(),));
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ));
                           },
                           child: const Text('Already have an account? Log in'),
                         ),

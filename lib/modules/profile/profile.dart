@@ -1,9 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:sober_steps/modules/auth/login.dart';
+import 'package:sober_steps/modules/communities/add_communities.dart';
+import 'package:sober_steps/modules/communities/communities.dart';
+import 'package:sober_steps/modules/communities/community_tab.dart';
 import 'package:sober_steps/modules/profile/about.dart';
 import 'package:sober_steps/modules/profile/bio.dart';
 import 'package:sober_steps/modules/sos/add_sos.dart';
+import 'package:sober_steps/modules/sos/sos.dart';
 
 class ProfilePage extends StatelessWidget {
   @override
@@ -105,12 +110,16 @@ class ProfilePage extends StatelessWidget {
                             const BorderRadius.all(Radius.circular(16))),
                     child: ListTile(
                       leading: const Icon(Icons.person),
-                      title: const Text('Personal Information'),
+                      title: const Text('SOS'),
                       onTap: () {
                         // Add functionality to navigate to personal information page
-                        Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AddSOS(),
-                      ));
+                          Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => SOS(),
+                        ));
+
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => AddCommunities(),
+                        // ));
                       },
                     ),
                   ),
@@ -159,6 +168,9 @@ class ProfilePage extends StatelessWidget {
                       title: const Text('Change Password'),
                       onTap: () {
                         // Add functionality to navigate to change password page
+                        // Navigator.of(context).push(MaterialPageRoute(
+                        //   builder: (context) => CommunityTab(),
+                        // ));
                       },
                     ),
                   ),
@@ -172,8 +184,13 @@ class ProfilePage extends StatelessWidget {
                     child: ListTile(
                       leading: const Icon(Icons.logout),
                       title: const Text('Logout'),
-                      onTap: () {
+                      onTap: () async {
                         // Add functionality to logout
+                         await FirebaseAuth.instance.signOut();
+                          Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>  LoginPage()));
                       },
                     ),
                   ),

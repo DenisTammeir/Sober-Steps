@@ -10,6 +10,7 @@ class MotivationalQuotesPage extends StatelessWidget {
   final bool smoke;
   final smokeStartDate;
   final drinkStartDate;
+  final bool hasReviewed;
 
   MotivationalQuotesPage({
     required this.mood,
@@ -19,6 +20,7 @@ class MotivationalQuotesPage extends StatelessWidget {
     required this.drinkStartDate,
     required this.drink,
     required this.smoke,
+    required this.hasReviewed,
   });
 
   @override
@@ -60,15 +62,16 @@ class MotivationalQuotesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: Theme.of(context).colorScheme.background,
-         elevation: 3,
-         title: Text('   Daily Assessment',
-         style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.grey[100],
-                  ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 3,
+        title: Text(
+          '   Daily Assessment',
+          style: TextStyle(
+            fontSize: 16.0,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Colors.grey[100],
+          ),
         ),
       ),
       body: Center(
@@ -148,28 +151,74 @@ class MotivationalQuotesPage extends StatelessWidget {
                               //     positiveSmoke: !hasSmokedTobacco,
                               //   ),
                               // ));
+                              if (hasReviewed) {
+                                FirebaseFirestore firestore =
+                                    FirebaseFirestore.instance;
 
-                              FirebaseFirestore firestore =
-                                  FirebaseFirestore.instance;
+                                // Get today's date as a timestamp
+                                DateTime now = DateTime.now();
+                                DateTime startOfDay =
+                                    DateTime(now.year, now.month, now.day);
+                                DateTime endOfDay = DateTime(
+                                    now.year, now.month, now.day, 23, 59, 59);
 
-                              // Get the collection reference
-                              CollectionReference collectionRef =
-                                  firestore.collection('assesments');
+                                Timestamp startOfDayTimestamp =
+                                    Timestamp.fromDate(startOfDay);
+                                Timestamp endOfDayTimestamp =
+                                    Timestamp.fromDate(endOfDay);
 
-                              // Add data to the collection
-                              DocumentReference documentRef =
-                                  await collectionRef.add({
-                                'userid': user?.uid,
-                                'timestamp': FieldValue.serverTimestamp(),
-                                'quote': motivationalQuote,
-                                'mood': mood,
-                                'drink': !positiveDrink,
-                                'smoke': !positiveSmoke,
-                                // 'value': randomValue,
-                              });
+                                // Get the collection reference
+                                CollectionReference collectionRef =
+                                    firestore.collection('assesments');
 
-                              // Update the document to add the ID field
-                              await documentRef.update({'id': documentRef.id});
+                                // Query documents where the timestamp field is within today's date range
+                                QuerySnapshot querySnapshot =
+                                    await collectionRef
+                                        .where('userid', isEqualTo: user?.uid)
+                                        .where('timestamp',
+                                            isGreaterThanOrEqualTo:
+                                                startOfDayTimestamp)
+                                        .where('timestamp',
+                                            isLessThanOrEqualTo:
+                                                endOfDayTimestamp)
+                                        .get();
+
+                                if (querySnapshot.docs.isNotEmpty) {
+                                  // Document with today's timestamp found, update it
+                                  String documentID =
+                                      querySnapshot.docs.first.id;
+                                  await collectionRef.doc(documentID).update({
+                                    'quote': motivationalQuote,
+                                    'mood': mood,
+                                    'drink': !positiveDrink,
+                                    'smoke': !positiveSmoke,
+                                    // Add other fields you want to update
+                                  });
+                                }
+                              } else {
+                                FirebaseFirestore firestore =
+                                    FirebaseFirestore.instance;
+
+                                // Get the collection reference
+                                CollectionReference collectionRef =
+                                    firestore.collection('assesments');
+
+                                // Add data to the collection
+                                DocumentReference documentRef =
+                                    await collectionRef.add({
+                                  'userid': user?.uid,
+                                  'timestamp': FieldValue.serverTimestamp(),
+                                  'quote': motivationalQuote,
+                                  'mood': mood,
+                                  'drink': !positiveDrink,
+                                  'smoke': !positiveSmoke,
+                                  // 'value': randomValue,
+                                });
+
+                                // Update the document to add the ID field
+                                await documentRef
+                                    .update({'id': documentRef.id});
+                              }
 
                               List<Map<String, dynamic>> addictionList = [];
                               if (!positiveDrink) {
@@ -214,8 +263,8 @@ class MotivationalQuotesPage extends StatelessWidget {
                                 'addictions': addictionList,
                               });
                               Navigator.of(context).pop();
-                               Navigator.of(context).pop();
-                                Navigator.of(context).pop();
+                              Navigator.of(context).pop();
+                              Navigator.of(context).pop();
                             },
                             child: Text(
                               'Complete Assesment',

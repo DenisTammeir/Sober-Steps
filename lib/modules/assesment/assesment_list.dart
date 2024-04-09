@@ -69,15 +69,16 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: Theme.of(context).colorScheme.background,
-         elevation: 3,
-         title: Text('   Assessment History',
-         style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    color: Colors.grey[100],
-                  ),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        elevation: 3,
+        title: Text(
+          '   Assessment History',
+          style: TextStyle(
+            fontSize: 20.0,
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+            color: Colors.grey[100],
+          ),
         ),
         actions: [
           StreamBuilder(
@@ -91,7 +92,17 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 }
                 if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-                  return const Center(child: Text('No reviews yet.'));
+                  return IconButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AssessmentPage(hasReviewed: false,),
+                        ));
+                      },
+                      icon: const Icon(
+                        Icons.add_reaction_outlined,
+                        color: Colors.white,
+                        size: 32,
+                      ));
                 }
                 final assesments = snapshot.data!.docs.first;
                 final userInfo = assesments.data();
@@ -111,19 +122,59 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
                 return IconButton(
                     onPressed: () {
                       if (isToday) {
-                        print('The timestamp is equal to today\'s date.');
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: const Text(
+                                "Sober Mind",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              content: const Text(
+                                "You have assessed today, would you like to assess again?",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              actions: <Widget>[
+                                TextButton(
+                                  child: const Text(
+                                    "Assess",
+                                    style: TextStyle(
+                                      color: Color.fromARGB(255, 182, 238, 171),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.pop(context); // Close the alert dialog
+                                    // Add your logic here for when the "Assess" button is pressed
+                                    // For example, you can navigate to the assessment screen
+                                    Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AssessmentPage(hasReviewed: true,),
+                        )); // Close the alert dialog
+                          
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        );
                       } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => AssessmentPage(),
-                ));
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => AssessmentPage(hasReviewed: false,),
+                        ));
                       }
                     },
-                    icon: Icon(Icons.add_reaction_outlined,
-                    color: Colors.white,
-                    size: 32,
+                    icon: const Icon(
+                      Icons.add_reaction_outlined,
+                      color: Colors.white,
+                      size: 32,
                     ));
               }),
-              SizedBox(width: 10,)
+          const SizedBox(
+            width: 10,
+          )
         ],
       ),
       body: Container(
