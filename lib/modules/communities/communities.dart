@@ -35,12 +35,12 @@ class _CommunitiesState extends State<Communities> {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Column(
+            return const Column(
               children: [
                 SizedBox(
                   height: 100,
                 ),
-                const Center(
+                Center(
                     child: Text(
                         'No communities joined.\nJoin a community and get motivated.')),
               ],
@@ -75,7 +75,8 @@ class _CommunitiesState extends State<Communities> {
                       
                       chatid: id,
                       name: name,
-                      isPart: ispart, users: users,
+                      isPart: ispart, users: users, isAdmin: widget.isAdmin,
+                      
                     ),
                   )),
                   child: Container(

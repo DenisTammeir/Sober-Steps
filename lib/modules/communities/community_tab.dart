@@ -13,22 +13,39 @@ class CommunityTab extends StatefulWidget {
 
 class _CommunityTabState extends State<CommunityTab> {
   String searchText = '';
-  String admin = 'markmuregi@gmail.com';
+  String admin = 'deian404e@gmail.com';
+
+  void community() {
+    final snackBar = const SnackBar(
+      content: Text('Community section. Coming soon...'),
+      duration: Duration(seconds: 3),
+      backgroundColor: Colors.purple,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+  void followers() {
+    final snackBar = const SnackBar(
+      content: Text('Followers section. Coming soon...'),
+      duration: Duration(seconds: 3),
+       backgroundColor: Colors.purple,
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
-    bool isAdmin = FirebaseAuth.instance.currentUser?.uid == admin;
+    bool isAdmin = FirebaseAuth.instance.currentUser?.email == admin;
 
     return Scaffold(
       body: DefaultTabController(
           length: 2,
           child: Column(children: [
             const SizedBox(
-              height: 60,
+              height: 30,
             ),
             Container(
               width: MediaQuery.of(context).size.width,
-              height: 40,
+              // height: 40,
               padding: const EdgeInsets.fromLTRB(40, 0, 40, 20),
               margin: const EdgeInsets.fromLTRB(0, 0, 0, 0),
               decoration: BoxDecoration(
@@ -54,29 +71,47 @@ class _CommunityTabState extends State<CommunityTab> {
                           fontSize: 12,
                           color: Color.fromARGB(255, 63, 62, 62),
                         ),
-                        // filled: true,
-                        // fillColor: Colors.grey[100], // Setting grey color
+                     
                         border: UnderlineInputBorder(),
-                        // enabledBorder: OutlineInputBorder(
-                        //   // Define the border for the enabled state
-                        //   borderRadius: BorderRadius.circular(12.0),
-                        //   borderSide: BorderSide.none, // No side border
-                        // ),
-                        // focusedBorder: OutlineInputBorder(
-                        //   // Define the border for the focused state
-                        //   borderRadius: BorderRadius.circular(12.0),
-                        //   borderSide: BorderSide.none, // No side border
-                        // ),
+                      
                       ),
                     ),
                   ),
-                  //      IconButton(
-                  // onPressed: () {
-                  //   Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => AddCommunities(),
-                  //   ));
-                  // },
-                  // SizedBox(width)
+                  Container(
+                    // height: 40,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                    
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        GestureDetector(
+                          onTap: community,
+                          child: Container(
+                            // padding: const EdgeInsets.fromLTRB(6, 6, 6, 20),
+                            padding: const EdgeInsets.all(6),
+                            child: const Icon(
+                              Icons.post_add, 
+                              color: Colors.white,
+                            size: 33,),
+                          ),
+                        ),
+                       
+                        GestureDetector(
+                          onTap: followers,
+                         child: Container(
+                            padding: const EdgeInsets.all(6),
+                            child: const Icon(
+                              Icons.account_box_outlined,
+                               color: Colors.white,
+                             size: 33,
+                            ),
+                          ),
+                       ),
+                         
+                      ],
+                    ),
+                  ),
+                
                   isAdmin
                       ? GestureDetector(
                           onTap: () {
@@ -84,7 +119,7 @@ class _CommunityTabState extends State<CommunityTab> {
                               builder: (context) => AddCommunities(),
                             ));
                           },
-                          child: Icon(
+                          child: const Icon(
                             Icons.add_task_outlined,
                             size: 36,
                             color: Colors.white,
@@ -102,10 +137,10 @@ class _CommunityTabState extends State<CommunityTab> {
                 unselectedLabelColor: Colors.grey[900],
                 labelColor: Colors.grey[300],
                 tabs: [
-                  Tab(
+                  const Tab(
                     text: 'My Communities',
                   ),
-                  Tab(
+                  const Tab(
                     text: 'Explore',
                   )
                 ]),

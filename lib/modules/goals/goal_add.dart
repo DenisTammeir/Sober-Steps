@@ -63,6 +63,14 @@ class _AddGoalPageState extends State<AddGoalPage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // SizedBox(height: 10.0),
+                            Text(
+                              'Add a Goal for Today',
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 16,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ),
                             Container(
                               padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                               // height: 160,

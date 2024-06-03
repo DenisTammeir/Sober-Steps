@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sober_steps/modules/auth/login.dart';
+import 'package:sober_steps/modules/auth/reset.dart';
 import 'package:sober_steps/modules/communities/add_communities.dart';
 import 'package:sober_steps/modules/communities/communities.dart';
 import 'package:sober_steps/modules/communities/community_tab.dart';
@@ -49,13 +51,14 @@ class ProfilePage extends StatelessWidget {
             final userInfo = userdata.data();
             final username = userInfo['username'];
             final email = userInfo['email'];
+            final profile = userInfo['profile'];
 
             return SingleChildScrollView(
               padding: const EdgeInsets.all(20.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Stack(
+                  Stack(
                     children: [
                       CircleAvatar(
                         radius: 64.0,
@@ -67,8 +70,12 @@ class ProfilePage extends StatelessWidget {
                         top: 4,
                         child: CircleAvatar(
                           radius: 60.0,
-                          backgroundImage: AssetImage(
-                              'assets/nature.jpg'), // Replace this with your image
+                          // backgroundImage: AssetImage(
+                          //     'assets/nature.jpg'), // Replace this with your image
+                          backgroundImage: profile != null
+                              ? NetworkImage(profile)
+                              : AssetImage('assets/nature.jpg')
+                                  as ImageProvider, // Replace this with your image
                         ),
                       ),
                     ],
@@ -113,7 +120,7 @@ class ProfilePage extends StatelessWidget {
                       title: const Text('SOS'),
                       onTap: () {
                         // Add functionality to navigate to personal information page
-                          Navigator.of(context).push(MaterialPageRoute(
+                        Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SOS(),
                         ));
 
@@ -168,9 +175,8 @@ class ProfilePage extends StatelessWidget {
                       title: const Text('Change Password'),
                       onTap: () {
                         // Add functionality to navigate to change password page
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => CommunityTab(),
-                        // ));
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: ((context) => ResetPassword())));
                       },
                     ),
                   ),
@@ -185,12 +191,21 @@ class ProfilePage extends StatelessWidget {
                       leading: const Icon(Icons.logout),
                       title: const Text('Logout'),
                       onTap: () async {
+                        void signOutUser() {
+                          FirebaseAuth.instance.signOut().then((value) =>
+                              Navigator.of(context).pushReplacement(
+                                  MaterialPageRoute(
+                                      builder: ((context) => LoginPage()))));
+                          SystemNavigator.pop(); // This line closes the app
+                        }
+
+                        signOutUser();
                         // Add functionality to logout
-                         await FirebaseAuth.instance.signOut();
-                          Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>  LoginPage()));
+                        // await FirebaseAuth.instance.signOut();
+                        // Navigator.push(
+                        //     context,
+                        //     MaterialPageRoute(
+                        //         builder: (context) => LoginPage()));
                       },
                     ),
                   ),

@@ -1,7 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:sober_steps/modules/auth/login.dart';
+import 'package:sober_steps/modules/auth/verify_email.dart';
 import 'package:sober_steps/modules/soberity/soberity_start.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -43,17 +45,23 @@ class _SignUpPageState extends State<SignUpPage> {
       );
       String uid = user.user!.uid;
 
-      // String? fcmToken = await FirebaseMessaging.instance.getToken();
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
       await FirebaseFirestore.instance.collection('users').doc(uid).set({
         'email': _email.text.trim(),
         'username': _username.text.trim(),
         'userid': uid,
         'profile': '',
         'createdAt': FieldValue.serverTimestamp(),
+        'fcm': fcmToken,  
+        'followers': [],
+        'following': [],
+        'verified': false,
       });
 
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => SobrietyStartPage()));
+      
+             Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => VerifyEmail(page: 'start',)));
+
     } on FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
         // Username Test

@@ -17,12 +17,13 @@ class Chats extends StatefulWidget {
   final name;
   final isPart;
   final users;
+  final isAdmin;
   const Chats(
       {super.key,
       required this.chatid,
       required this.name,
       required this.isPart,
-      required this.users});
+      required this.users, required this.isAdmin});
 
   @override
   State<Chats> createState() => _ChatsState();
@@ -153,16 +154,18 @@ class _ChatsState extends State<Chats> {
         elevation: 3,
         title: GestureDetector(
           onTap: () {
-            Navigator.of(context).push(MaterialPageRoute(
+            widget.isAdmin
+           ? Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => AdminSectionUI(
                 users: widget.users,
                 id: widget.chatid,
               ),
-            ));
+            ))
+            : null;
           },
           child: Text(
             widget.name,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 16, color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
@@ -172,7 +175,7 @@ class _ChatsState extends State<Chats> {
                   padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                             vertical: 4,
                             horizontal: 6), // Adjust padding as needed
                       ),
@@ -183,9 +186,13 @@ class _ChatsState extends State<Chats> {
                             .update({
                           'users': FieldValue.arrayUnion([userId]),
                         }).then((_) {
-                          print('User joined successfully');
+                          if (kDebugMode) {
+                            print('User joined successfully');
+                          }
                         }).catchError((error) {
-                          print('Error  joining: $error');
+                          if (kDebugMode) {
+                            print('Error  joining: $error');
+                          }
                         });
                       },
                       child: const Text(
@@ -196,9 +203,9 @@ class _ChatsState extends State<Chats> {
                   padding: const EdgeInsets.fromLTRB(12, 10, 12, 10),
                   child: PopupMenuButton(
                     itemBuilder: (BuildContext context) => <PopupMenuEntry>[
-                      PopupMenuItem(
-                        child: Text('Leave'),
+                      const PopupMenuItem(
                         value: 'Leave',
+                        child: Text('Leave'),
                       ),
                       // PopupMenuItem(
                       //   child: Text('Option 2'),
@@ -211,19 +218,25 @@ class _ChatsState extends State<Chats> {
                     ],
                     onSelected: (value) async {
                       // Handle menu item selection
-                      print('Selected option: $value');
+                      if (kDebugMode) {
+                        print('Selected option: $value');
+                      }
                       await FirebaseFirestore.instance
                           .collection('communities')
                           .doc(widget.chatid)
                           .update({
                         'users': FieldValue.arrayRemove([userId]),
                       }).then((_) {
-                        print('User leave successful');
+                        if (kDebugMode) {
+                          print('User leave successful');
+                        }
                       }).catchError((error) {
-                        print('Error leaving: $error');
+                        if (kDebugMode) {
+                          print('Error leaving: $error');
+                        }
                       });
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.more_vert_outlined,
                       color: Colors.white,
                       size: 30,
@@ -323,7 +336,7 @@ class _ChatsState extends State<Chats> {
                                   messagesForDate[index]['type'];
 
                               String isMe = messagesForDate[index]['senderId'];
-                              String msgId = messagesForDate[index]['id'];
+                              // String msgId = messagesForDate[index]['id'];
                               // String replyMsg =
                               //     messagesForDate[index]['replyContent'];
 
@@ -382,7 +395,7 @@ class _ChatsState extends State<Chats> {
                                           padding: const EdgeInsets.all(4),
                                           decoration: BoxDecoration(
                                             color: isMe == userId
-                                                ? Color.fromARGB(
+                                                ? const Color.fromARGB(
                                                     255, 50, 197, 141)
                                                 : Theme.of(context)
                                                     .colorScheme
@@ -409,7 +422,7 @@ class _ChatsState extends State<Chats> {
                                               messageType == 'text'
                                                   ? Text(
                                                       messageText,
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 14,
                                                           color: Colors.white),
                                                     )
@@ -424,7 +437,7 @@ class _ChatsState extends State<Chats> {
                                                           ),
                                                         ));
                                                       },
-                                                      child: Container(
+                                                      child: SizedBox(
                                                         height: 120,
                                                         child: Image.network(
                                                           messageText,
@@ -473,12 +486,12 @@ class _ChatsState extends State<Chats> {
                     width: MediaQuery.of(context).size.width,
                     margin: const EdgeInsets.fromLTRB(4, 8, 4, 8),
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                      borderRadius: const BorderRadius.all(Radius.circular(20)),
                       color: Theme.of(context)
                           .colorScheme
                           .background
                           .withOpacity(0.9),
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                             color: Color.fromARGB(255, 63, 63, 63), //New
                             blurRadius: 3.0,
@@ -603,7 +616,6 @@ class SentImages extends StatefulWidget {
 }
 
 class _SentImagesState extends State<SentImages> {
-  bool _downloading = false;
 
   @override
   void initState() {
@@ -630,7 +642,6 @@ class _SentImagesState extends State<SentImages> {
 
   Future<void> _downloadImage() async {
     setState(() {
-      _downloading = true;
     });
     final snackBar = SnackBar(
       content: const Text('Saving image...'),
@@ -669,12 +680,10 @@ class _SentImagesState extends State<SentImages> {
       await file.writeAsBytes(response.bodyBytes);
 
       setState(() {
-        _downloading = false;
       });
     } catch (e) {
       print('errrororooroororr: $e');
       setState(() {
-        _downloading = false;
       });
     }
   }

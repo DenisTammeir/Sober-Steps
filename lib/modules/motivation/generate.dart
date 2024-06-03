@@ -10,8 +10,8 @@ class FirestoreBatchAddPage extends StatefulWidget {
 
 class _FirestoreBatchAddPageState extends State<FirestoreBatchAddPage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
- DateTime _startDate = DateTime.now().add(Duration(days: 40));
-DateTime _endDate = DateTime.now().add(Duration(days: 60)); // One month later
+ DateTime _startDate = DateTime.now().add(Duration(days: 600));
+DateTime _endDate = DateTime.now().add(Duration(days: 1000)); // One month later
 
 // Update the dates dynamically
 // _startDate = DateTime.now().add(Duration(days: 10)); // Update _startDate to 30 days from now

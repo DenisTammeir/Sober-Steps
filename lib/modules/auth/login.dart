@@ -1,6 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sober_steps/modules/auth/sign_up.dart';
+import 'package:sober_steps/modules/auth/verify_email.dart';
 import 'package:sober_steps/modules/widgets/bottom_bar.dart';
 
 class LoginPage extends StatefulWidget {
@@ -13,6 +17,31 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   var _isPasswordVisible = true;
+
+
+  Future<void> saveFCMTokenToFirestore(String? userId) async {
+    // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
+    try {
+      // Request the FCM token
+      String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+      // Save the FCM token to Firestore under the user's document
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'fcmToken': fcmToken});
+
+      if (kDebugMode) {
+        print('FCM Token saved to Firestore: $fcmToken');
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print('Error saving FCM token: $e');
+      }
+    }
+  }
+
 
   void wrongEmailMsg() {
     final snackBar = SnackBar(
@@ -49,12 +78,17 @@ class _LoginPageState extends State<LoginPage> {
         password: password.text.trim(),
       ))
           .user;
+            saveFCMTokenToFirestore(user?.uid);
 
       Navigator.pop(context) ;
 
       if (user != null) {
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => BottomBar()));
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (context) => BottomBar()));
+
+           Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => VerificationAuth()));
+
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);

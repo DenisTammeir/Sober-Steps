@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sober_steps/modules/communities/chats.dart';
 
@@ -35,7 +36,10 @@ class _AllCommunitiesState extends State<AllCommunities> {
             return Center(child: Text('Error: ${snapshot.error}'));
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return const Center(child: Text('No goals yet.'));
+            return const Center(child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text('No communities have been created. Check your internet too...'),
+            ));
           }
           final communityDoc = snapshot.data!.docs;
 
@@ -53,7 +57,7 @@ class _AllCommunitiesState extends State<AllCommunities> {
                     communityDocs[index].data() as Map<String, dynamic>;
 
                 final name = community['name'] as String;
-                final description = community['description'] as String;
+                // final description = community['description'] as String;
                 final profile = community['profile'] as String;
                 final id = community['id'] as String;
                 final users = community['users'] as List;
@@ -66,6 +70,7 @@ class _AllCommunitiesState extends State<AllCommunities> {
                       chatid: id,
                       name: name,
                       isPart: ispart, users: users,
+                      isAdmin: widget.isAdmin,
                     ),
                   )),
                   child: Container(
@@ -102,7 +107,7 @@ class _AllCommunitiesState extends State<AllCommunities> {
                                   ],
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 width: 200,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -119,8 +124,7 @@ class _AllCommunitiesState extends State<AllCommunities> {
                                       ),
                                     ),
                                     Text(
-                                      '$members' +
-                                          ' member${members > 1 ? 's' : ''} ',
+                                      '$members' ' member${members > 1 ? 's' : ''} ',
                                       style: TextStyle(
                                         // fontSize: 13
                                         // fontWeight: FontWeight.bold,
@@ -143,9 +147,13 @@ class _AllCommunitiesState extends State<AllCommunities> {
                                           'users':
                                               FieldValue.arrayRemove([userId]),
                                         }).then((_) {
-                                          print('User leave successful');
+                                          if (kDebugMode) {
+                                            print('User leave successful');
+                                          }
                                         }).catchError((error) {
-                                          print('Error leaving: $error');
+                                          if (kDebugMode) {
+                                            print('Error leaving: $error');
+                                          }
                                         });
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -174,9 +182,13 @@ class _AllCommunitiesState extends State<AllCommunities> {
                                           'users':
                                               FieldValue.arrayUnion([userId]),
                                         }).then((_) {
-                                          print('User joined successfully');
+                                          if (kDebugMode) {
+                                            print('User joined successfully');
+                                          }
                                         }).catchError((error) {
-                                          print('Error  joining: $error');
+                                          if (kDebugMode) {
+                                            print('Error  joining: $error');
+                                          }
                                         });
                                       },
                                       child: const Text(

@@ -36,6 +36,7 @@ class _BottomBarState extends State<BottomBar> {
       //   title: const Text('Bottom Bar with Elevated Middle Item'),
       // ),
       bottomNavigationBar: BottomAppBar(
+        
         child: Stack(
           children: [
             Row(
