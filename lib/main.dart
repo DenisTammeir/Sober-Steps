@@ -2,9 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:sober_steps/firebase_options.dart';
-import 'package:sober_steps/modules/auth/login.dart';
 import 'package:sober_steps/modules/auth/verify_email.dart';
-import 'package:sober_steps/modules/widgets/bottom_bar.dart';
+import 'package:sober_steps/modules/auth/welcome.dart';
 
 void main() async {
    WidgetsFlutterBinding.ensureInitialized();
@@ -28,8 +27,9 @@ class MyApp extends StatelessWidget {
           seedColor: Colors.deepPurple,
           primary: Colors.green,
           secondary: Colors.amber,
-          background: Color.fromARGB(255, 7, 148, 12),
+          background: const Color.fromARGB(255, 7, 148, 12),
           tertiary: Colors.grey[200],
+          error: const Color(0xFFD6006B),
           ),
 
         useMaterial3: true,
@@ -55,7 +55,7 @@ class Auth extends StatelessWidget {
           if (user != null) {
             return  SoberityAuth();
           } else {
-            return LoginPage();
+            return const WelcomePage();
           }
         },
       ),

@@ -51,7 +51,7 @@ class _ViewGoalsState extends State<ViewGoals> {
               alignment: Alignment.centerLeft,
               child: Text(
                 widget.formatedDate,
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontSize: 20,
@@ -69,7 +69,7 @@ class _ViewGoalsState extends State<ViewGoals> {
                                     ConnectionState.waiting) {
                                   // While waiting for the result, you can return a loading indicator or null.
                                   // return CircularProgressIndicator(); // Replace with your loading indicator.
-                                  return Center();
+                                  return const Center();
                                 }
                   if (snapshot.hasError) {
                     return Center(child: Text('Error: ${snapshot.error}'));

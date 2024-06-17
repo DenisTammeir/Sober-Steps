@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -164,10 +166,19 @@ class _SobrietyUpdatePageState extends State<SobrietyUpdatePage> {
             const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () async {
-                if (((drinkAddiction != null && drinkStartDate != null) ||
-                        (smokeAddiction != null && smokeStartDate != null)) &&
-                    ((drinkAddiction != null && smokeAddiction == null) ||
-                        (drinkAddiction == null && smokeAddiction != null))) {
+                if (
+                    // Case 1: Both addictions are non-null with non-null dates
+                    (drinkAddiction != null &&
+                            drinkStartDate != null &&
+                            smokeAddiction != null &&
+                            smokeStartDate != null) ||
+                        // Case 2: Only one addiction is non-null with a non-null date
+                        ((drinkAddiction != null && drinkStartDate != null) &&
+                            (smokeAddiction == null &&
+                                smokeStartDate == null)) ||
+                        ((smokeAddiction != null && smokeStartDate != null) &&
+                            (drinkAddiction == null &&
+                                drinkStartDate == null))) {
                   try {
                     List<Map<String, dynamic>> addictionList = [];
                     if (drinkAddiction != null) {

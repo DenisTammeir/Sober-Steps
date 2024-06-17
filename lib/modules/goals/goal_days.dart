@@ -26,12 +26,12 @@ class DaysListScreen extends StatelessWidget {
                   builder: (context) => AddGoalPage(),
                 ));
               },
-              icon: Icon(
+              icon: const Icon(
                 Icons.add_task_outlined,
                 size: 36,
                 color: Colors.white,
               )),
-          SizedBox(
+          const SizedBox(
             width: 10,
           )
         ],
@@ -82,18 +82,18 @@ class DaysList extends StatelessWidget {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Container(
-              padding: EdgeInsets.symmetric(
+              padding: const EdgeInsets.symmetric(
                 vertical: 6,
                 horizontal: 24,
               ),
               child: Text(
                 month,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 5),
+            const SizedBox(height: 5),
             Column(
               children: days.map((date) => DayTile(date: date)).toList(),
             ),
@@ -134,14 +134,14 @@ class DayTile extends StatelessWidget {
           children: [
             Text(
               '$dayOfWeek ',
-              style: TextStyle(fontSize: 13
+              style: const TextStyle(fontSize: 13
                   // fontWeight: FontWeight.bold,
                   // color: Colors.white,
                   ),
             ),
             Text(
               formattedDate,
-              style: TextStyle(fontSize: 13
+              style: const TextStyle(fontSize: 13
                   // fontWeight: FontWeight.bold,
                   // color: Colors.white,
                   ),

@@ -5,7 +5,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sober_steps/modules/auth/sign_up.dart';
 import 'package:sober_steps/modules/auth/verify_email.dart';
-import 'package:sober_steps/modules/widgets/bottom_bar.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -17,7 +16,6 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   var _isPasswordVisible = true;
-
 
   Future<void> saveFCMTokenToFirestore(String? userId) async {
     // final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
@@ -42,7 +40,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   void wrongEmailMsg() {
     final snackBar = SnackBar(
       content: const Text('No user found.'),
@@ -61,7 +58,7 @@ class _LoginPageState extends State<LoginPage> {
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 
-   void signin() async {
+  void signin() async {
     showDialog(
         context: context,
         builder: (context) {
@@ -78,17 +75,16 @@ class _LoginPageState extends State<LoginPage> {
         password: password.text.trim(),
       ))
           .user;
-            saveFCMTokenToFirestore(user?.uid);
+      saveFCMTokenToFirestore(user?.uid);
 
-      Navigator.pop(context) ;
+      Navigator.pop(context);
 
       if (user != null) {
         // Navigator.pushReplacement(
         //     context, MaterialPageRoute(builder: (context) => BottomBar()));
 
-           Navigator.pushReplacement(context,
+        Navigator.pushReplacement(context,
             MaterialPageRoute(builder: (context) => VerificationAuth()));
-
       }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
@@ -99,10 +95,13 @@ class _LoginPageState extends State<LoginPage> {
         // Password Test
 
         wrongPasswordMsg();
+      } else if (e.code == 'invalid-credential') {
+        // Password Test
+        // Navigator.pop(context);
+        wrongPasswordMsg();
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/nature.jpg'),
                 fit: BoxFit.cover,
@@ -122,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: Container(
-                padding: EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(20.0),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.7),
                   borderRadius: BorderRadius.circular(20.0),
@@ -131,7 +130,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Colors.grey.withOpacity(0.5),
                       spreadRadius: 5,
                       blurRadius: 7,
-                      offset: Offset(0, 3),
+                      offset: const Offset(0, 3),
                     ),
                   ],
                 ),
@@ -160,7 +159,7 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                         TextFormField(
                           controller: email,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Email',
                           ),
                           keyboardType: TextInputType.emailAddress,
@@ -175,7 +174,7 @@ class _LoginPageState extends State<LoginPage> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         TextFormField(
                           controller: password,
                           obscureText: !_isPasswordVisible,
@@ -202,20 +201,23 @@ class _LoginPageState extends State<LoginPage> {
                             return null;
                           },
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         ElevatedButton(
                           onPressed: () async {
                             // Implement login logic here
-                              final isValid =
-                                        _formKey.currentState!.validate();
-                                    if (isValid) {
-                                      signin();
-                                    }
-                           
+                            final isValid = _formKey.currentState!.validate();
+                            if (isValid) {
+                              signin();
+                            }
                           },
-                          child: Text('Log In'),
+                          child: Text(
+                            'Log In',
+                            style: TextStyle(
+                              color: Colors.grey[100],
+                            ),
+                          ),
                         ),
-                        SizedBox(height: 20.0),
+                        const SizedBox(height: 20.0),
                         TextButton(
                           onPressed: () {
                             // Navigate to sign-up page
@@ -224,7 +226,7 @@ class _LoginPageState extends State<LoginPage> {
                             ));
                             ;
                           },
-                          child: Text('Don\'t have an account? Sign up'),
+                          child: const Text('Don\'t have an account? Sign up'),
                         ),
                       ],
                     ),

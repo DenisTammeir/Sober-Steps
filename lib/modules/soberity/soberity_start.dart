@@ -38,13 +38,13 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
+            const Text(
               'Select Your Addiction(s):',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 8.0),
+            const SizedBox(height: 8.0),
             CheckboxListTile(
-              title: Text('Alcohol'),
+              title: const Text('Alcohol'),
               value: drinkAddiction != null,
               onChanged: (value) {
                 setState(() {
@@ -53,7 +53,7 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
               },
             ),
             CheckboxListTile(
-              title: Text('Smoking'),
+              title: const Text('Smoking'),
               value: smokeAddiction != null,
               onChanged: (value) {
                 setState(() {
@@ -61,13 +61,13 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
                 });
               },
             ),
-            SizedBox(height: 16.0),
+            const SizedBox(height: 16.0),
             if (drinkAddiction != null) ...[
-              Text(
+              const Text(
                 'Select Alcohol Abstinence  Start Date:',
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               ElevatedButton(
                 onPressed: () async {
                   final selectedDate = await showDatePicker(
@@ -88,11 +88,11 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
               ),
             ],
             if (smokeAddiction != null) ...[
-              Text(
+              const Text(
                 'Select  Smoking Abstinence Start Date:',
                 style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 8.0),
+              const SizedBox(height: 8.0),
               ElevatedButton(
                 onPressed: () async {
                   final selectedDate = await showDatePicker(
@@ -112,13 +112,22 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
                 ),
               ),
             ],
-            SizedBox(height: 24.0),
+            const SizedBox(height: 24.0),
             ElevatedButton(
               onPressed: () async {
-                if (((drinkAddiction != null && drinkStartDate != null) ||
-                        (smokeAddiction != null && smokeStartDate != null)) &&
-                    ((drinkAddiction != null && smokeAddiction == null) ||
-                        (drinkAddiction == null && smokeAddiction != null))) {
+                if (
+                    // Case 1: Both addictions are non-null with non-null dates
+                    (drinkAddiction != null &&
+                            drinkStartDate != null &&
+                            smokeAddiction != null &&
+                            smokeStartDate != null) ||
+                        // Case 2: Only one addiction is non-null with a non-null date
+                        ((drinkAddiction != null && drinkStartDate != null) &&
+                            (smokeAddiction == null &&
+                                smokeStartDate == null)) ||
+                        ((smokeAddiction != null && smokeStartDate != null) &&
+                            (drinkAddiction == null &&
+                                drinkStartDate == null))) {
                   try {
                     List<Map<String, dynamic>> addictionList = [];
                     if (drinkAddiction != null) {
@@ -142,24 +151,24 @@ class _SobrietyStartPageState extends State<SobrietyStartPage> {
                     });
 
                     ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
+                      const SnackBar(
                           content:
                               Text('Sobriety start data added to Firebase!')),
                     );
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => BottomBar()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => const BottomBar()));
                   } catch (e) {
                     print('Error adding sobriety start data: $e');
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
+                    const SnackBar(
                         content:
                             Text('Please select addiction and start date.')),
                   );
                 }
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         ),
