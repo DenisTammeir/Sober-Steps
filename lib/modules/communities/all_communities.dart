@@ -80,8 +80,6 @@ class _AllCommunitiesState extends State<AllCommunities> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
                               Container(
                                 // height: 7,
                                 margin: const EdgeInsets.fromLTRB(0, 0, 10, 0),
@@ -107,8 +105,7 @@ class _AllCommunitiesState extends State<AllCommunities> {
                                   ],
                                 ),
                               ),
-                              SizedBox(
-                                width: 200,
+                              Expanded( 
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -117,10 +114,10 @@ class _AllCommunitiesState extends State<AllCommunities> {
                                       name,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         // fontSize: 13
                                         fontWeight: FontWeight.bold,
-                                        color: Colors.white,
+                                        color: Colors.grey[700],
                                       ),
                                     ),
                                     Text(
@@ -128,14 +125,13 @@ class _AllCommunitiesState extends State<AllCommunities> {
                                       style: TextStyle(
                                         // fontSize: 13
                                         // fontWeight: FontWeight.bold,
-                                        color: Colors.grey[400],
+                                        color: Colors.grey[500],
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                            ],
-                          ),
+                        
                           !widget.isAdmin
                               ? ispart
                                   ? ElevatedButton(

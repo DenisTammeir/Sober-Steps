@@ -21,7 +21,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage(
                       'assets/lake.jpg'), // Replace 'assets/background_image.jpg' with your image path
@@ -33,7 +33,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.all(20.0),
+              padding: const EdgeInsets.all(20.0),
               decoration: BoxDecoration(
                 // color: Colors.grey[200],
                 borderRadius: BorderRadius.circular(20.0),
@@ -48,7 +48,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                   //     fontWeight: FontWeight.bold,
                   //   ),
                   // ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   SizedBox(
                     height: 320,
                     child: Card(
@@ -57,7 +57,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                         borderRadius: BorderRadius.circular(15.0),
                       ),
                       child: Padding(
-                        padding: EdgeInsets.all(15.0),
+                        padding: const EdgeInsets.all(15.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -72,7 +72,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+                              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                               // height: 160,
                               child: Center(
                                 child: TextField(
@@ -83,7 +83,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
                                     labelText: 'Enter your goal',
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(10.0),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           color: Colors
                                               .grey), // Adjust the color as needed
                                     ),
@@ -144,7 +144,7 @@ class _AddGoalPageState extends State<AddGoalPage> {
         // Add data to the collection
         DocumentReference documentRef = await collectionRef.add({
           // 'userid': user?.uid,
-          'timestamp': FieldValue.serverTimestamp(),
+          'timestamp': FieldValue.serverTimestamp() ?? DateTime.now().millisecondsSinceEpoch,
           'goal': goal,
           'userid': userId,
           'done': false,
@@ -157,20 +157,20 @@ class _AddGoalPageState extends State<AddGoalPage> {
 
         // Show success message or navigate to another page
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Goal added successfully!')),
+          const SnackBar(content: Text('Goal added successfully!')),
         );
       } catch (e) {
         print('Error adding goal: $e');
         // Show error message
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
+          const SnackBar(
               content: Text('Failed to add goal. Please try again later.')),
         );
       }
     } else {
       // Show error message if the goal field is empty
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please enter a goal.')),
+        const SnackBar(content: Text('Please enter a goal.')),
       );
     }
   }

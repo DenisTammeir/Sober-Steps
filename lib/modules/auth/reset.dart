@@ -11,7 +11,6 @@ class ResetPassword extends StatefulWidget {
 class _ResetPasswordState extends State<ResetPassword> {
   final _email = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  
 
   void wrongEmailMsg() {
     final snackBar = SnackBar(
@@ -89,29 +88,31 @@ class _ResetPasswordState extends State<ResetPassword> {
                 ),
                 Container(
                   width: MediaQuery.of(context).size.width * .8,
-                   margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                  margin: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                   height: 50,
                   child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.grey[300],
+                        backgroundColor: Theme.of(context).colorScheme.primary,
                       ),
                       onPressed: () async {
                         final isValid = _formKey.currentState!.validate();
 
                         if (isValid) {
                           PasswordReset();
-                        
                         }
-                          
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
                               padding: const EdgeInsets.fromLTRB(0, 0, 6, 0),
-                              child: const Icon(Icons.restore)),
-                          const Text(
+                              child: Icon(
+                                Icons.restore,
+                                color: Colors.grey[100],
+                              )),
+                          Text(
                             'Reset Password',
+                            style: TextStyle(color: Colors.grey[100]),
                           )
                         ],
                       )),

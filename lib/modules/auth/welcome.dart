@@ -19,7 +19,7 @@ class Welcome extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey[100],
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -28,7 +28,7 @@ class Welcome extends StatelessWidget {
                 "We are initializing your sobriety data. This may take a few moments.",
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.grey[100],
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -41,7 +41,7 @@ class Welcome extends StatelessWidget {
                 "Thank you for your patience.",
                 style: TextStyle(
                   fontSize: 16,
-                  color: Colors.grey[100],
+                  color: Colors.grey[600],
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -76,7 +76,7 @@ class WelcomePage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
-                  color: Colors.grey[100],
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -85,7 +85,7 @@ class WelcomePage extends StatelessWidget {
                 "Embark on your journey to a healthier, happier life. Connect with our community, set your goals, and achieve milestones with our support.",
                 style: TextStyle(
                   fontSize: 18,
-                  color: Colors.grey[100],
+                  color: Theme.of(context).colorScheme.primary,
                 ),
                 textAlign: TextAlign.center,
               ),

@@ -135,7 +135,7 @@ class _CommunityTabState extends State<CommunityTab> {
                 indicatorWeight: 4,
                 dividerColor: Colors.white,
                 unselectedLabelColor: Colors.grey[900],
-                labelColor: Colors.grey[300],
+                labelColor: Colors.grey[400],
                 tabs: [
                   const Tab(
                     text: 'My Communities',

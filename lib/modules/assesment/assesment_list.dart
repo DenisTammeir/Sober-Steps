@@ -69,7 +69,10 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        iconTheme: IconThemeData(
+          color: Colors.grey[100],
+        ),
         elevation: 3,
         title: Text(
           '   Assessment History',
@@ -95,7 +98,9 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
                   return IconButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AssessmentPage(hasReviewed: false,),
+                          builder: (context) => const AssessmentPage(
+                            hasReviewed: false,
+                          ),
                         ));
                       },
                       icon: const Icon(
@@ -147,13 +152,16 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    Navigator.pop(context); // Close the alert dialog
+                                    Navigator.pop(
+                                        context); // Close the alert dialog
                                     // Add your logic here for when the "Assess" button is pressed
                                     // For example, you can navigate to the assessment screen
-                                    Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AssessmentPage(hasReviewed: true,),
-                        )); // Close the alert dialog
-                          
+                                    Navigator.of(context)
+                                        .push(MaterialPageRoute(
+                                      builder: (context) => const AssessmentPage(
+                                        hasReviewed: true,
+                                      ),
+                                    )); // Close the alert dialog
                                   },
                                 ),
                               ],
@@ -162,7 +170,9 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
                         );
                       } else {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => AssessmentPage(hasReviewed: false,),
+                          builder: (context) => const AssessmentPage(
+                            hasReviewed: false,
+                          ),
                         ));
                       }
                     },
@@ -214,7 +224,7 @@ class _AssessmentHistoryPageState extends State<AssessmentHistoryPage> {
                       margin: const EdgeInsets.fromLTRB(22, 3, 22, 3),
                       // height: 50,
                       decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: Theme.of(context).colorScheme.inversePrimary,
                           borderRadius:
                               const BorderRadius.all(Radius.circular(10))),
                       child: ListTile(

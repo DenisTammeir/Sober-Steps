@@ -131,7 +131,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Text(
                       'Delete',
                       style: TextStyle(
-                        color: Colors.red[400],
+                        color: Colors.red[500],
                       ),
                     ),
                   ),
@@ -143,7 +143,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: Text(
                       'Remain',
                       style: TextStyle(
-                        color: Colors.grey[300],
+                        color: Colors.grey[500],
                       ),
                     ),
                   ),
@@ -171,7 +171,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final userid = userAc?.uid;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 3,
         title: Text(
           '    Profile',
@@ -222,7 +222,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               'Log out',
                               style: TextStyle(
-                                color: Colors.yellow[500],
+                                color: Theme.of(context).colorScheme.primary,
                               ),
                             ),
                           ),
@@ -234,7 +234,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             child: Text(
                               'Remain Active',
                               style: TextStyle(
-                                color: Colors.grey[100],
+                                color: Colors.grey[400],
                               ),
                             ),
                           ),
@@ -313,7 +313,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     email, // Replace with the user's email
                     style: TextStyle(
                       fontSize: 16.0,
-                      color: Colors.grey[100],
+                      color: Colors.grey[600],
                     ),
                   ),
                   const SizedBox(height: 20.0),
@@ -331,7 +331,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     margin: const EdgeInsets.fromLTRB(24, 50, 24, 6),
                     // height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: Theme.of(context).colorScheme.inversePrimary,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(16))),
                     child: ListTile(
@@ -353,7 +353,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     margin: const EdgeInsets.fromLTRB(24, 14, 24, 6),
                     // height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: Theme.of(context).colorScheme.inversePrimary,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(16))),
                     child: ListTile(
@@ -371,7 +371,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     margin: const EdgeInsets.fromLTRB(24, 14, 24, 6),
                     // height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: Theme.of(context).colorScheme.inversePrimary,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(16))),
                     child: ListTile(
@@ -388,7 +388,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     margin: const EdgeInsets.fromLTRB(24, 14, 24, 6),
                     // height: 50,
                     decoration: BoxDecoration(
-                        color: Colors.grey[300],
+                        color: Theme.of(context).colorScheme.inversePrimary,
                         borderRadius:
                             const BorderRadius.all(Radius.circular(16))),
                     child: ListTile(
@@ -415,7 +415,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: Text(
                                       'Remove Account',
                                       style: TextStyle(
-                                        color: Colors.red[200],
+                                        color: Colors.red[500],
                                       ),
                                     ),
                                   ),
@@ -427,7 +427,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     child: Text(
                                       'Remain Sober',
                                       style: TextStyle(
-                                        color: Colors.grey[100],
+                                        color: Colors.grey[500],
                                       ),
                                     ),
                                   ),

@@ -29,7 +29,7 @@ class MotivationalQuotesPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 3,
         title: Text(
           '    Motivation',
@@ -149,10 +149,10 @@ class MotivationalQuotesPage extends StatelessWidget {
             ),
             Container(
               margin: const EdgeInsets.fromLTRB(22, 40, 22, 20),
-              child: const Text(
+              child: Text(
                 'Previous',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Colors.grey[600],
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
@@ -167,7 +167,7 @@ class MotivationalQuotesPage extends StatelessWidget {
                   margin: const EdgeInsets.fromLTRB(22, 6, 22, 6),
                   height: 50,
                   decoration: BoxDecoration(
-                      color: Colors.grey[300],
+                      color: Theme.of(context).colorScheme.inversePrimary,
                       borderRadius:
                           const BorderRadius.all(Radius.circular(10))),
                   child: ListTile(

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:sober_steps/modules/sos/add_sos.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -112,7 +113,7 @@ class _SOSState extends State<SOS> {
              
               return Container(
                 decoration: BoxDecoration(
-                  color: Colors.grey[300],
+                  color: Theme.of(context).colorScheme.inversePrimary,
                   borderRadius: BorderRadius.circular(10.0),
                   boxShadow: [
                     BoxShadow(
@@ -128,17 +129,26 @@ class _SOSState extends State<SOS> {
                 margin: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: ListTile(
                   onTap: () async{
-                      final Uri params = Uri(
-                                        scheme: 'tel',
-                                        path: phone,
-                                      );
-                                      final String phoneurl = params.toString();
-                                      if (await canLaunch(phoneurl)) {
-                                        await launch(phoneurl);
-                                      } else {
-                                        throw 'Sorry cannot launch $phoneurl';
-                                      }
-                                    
+                      // final Uri params = Uri(
+                      //                   scheme: 'tel',
+                      //                   path: phone,
+                      //                 );
+                      //                 final String phoneurl = params.toString();
+                      //                 if (await canLaunch(phoneurl)) {
+                      //                   await launch(phoneurl);
+                      //                 } else {
+                      //                   throw 'Sorry cannot launch $phoneurl';
+                      //                 }
+                                      // Call/message;
+                                    final textToCopy = phone;
+                                    Clipboard.setData(
+                                        ClipboardData(text: textToCopy));
+                                    // Optionally, show a SnackBar to inform the user
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(
+                                              'Phone number Copied to clipboard')),
+                                    );
                                  
                   },
                   leading: Container(

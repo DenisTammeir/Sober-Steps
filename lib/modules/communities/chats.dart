@@ -23,7 +23,8 @@ class Chats extends StatefulWidget {
       required this.chatid,
       required this.name,
       required this.isPart,
-      required this.users, required this.isAdmin});
+      required this.users,
+      required this.isAdmin});
 
   @override
   State<Chats> createState() => _ChatsState();
@@ -150,18 +151,18 @@ class _ChatsState extends State<Chats> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         elevation: 3,
         title: GestureDetector(
           onTap: () {
             widget.isAdmin
-           ? Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => AdminSectionUI(
-                users: widget.users,
-                id: widget.chatid,
-              ),
-            ))
-            : null;
+                ? Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => AdminSectionUI(
+                      users: widget.users,
+                      id: widget.chatid,
+                    ),
+                  ))
+                : null;
           },
           child: Text(
             widget.name,
@@ -318,7 +319,7 @@ class _ChatsState extends State<Chats> {
                             style: TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.bold,
-                                color: Theme.of(context).focusColor),
+                                color: Colors.grey[500]),
                           ),
                         ),
                       ),
@@ -508,13 +509,13 @@ class _ChatsState extends State<Chats> {
                             minLines: 1,
                             maxLines: 5,
                             style: TextStyle(
-                              color: Colors.grey[200],
+                              color: Colors.grey[700],
                             ),
                             decoration: InputDecoration(
                               hintText: 'Send message...',
                               hintStyle: TextStyle(
                                 fontSize: 12,
-                                color: Colors.grey[200],
+                                color: Colors.grey[400],
                                 fontWeight: FontWeight.bold,
                               ),
                               enabledBorder: OutlineInputBorder(
@@ -580,6 +581,7 @@ class _ChatsState extends State<Chats> {
                               await documentRef.update({'id': documentRef.id});
                               // String replyid, String replyContent, String replyType
                             }
+                            _msgController.clear();
                           },
                           child: const Icon(Icons.send_outlined),
                         ),
@@ -616,7 +618,6 @@ class SentImages extends StatefulWidget {
 }
 
 class _SentImagesState extends State<SentImages> {
-
   @override
   void initState() {
     super.initState();
@@ -641,8 +642,7 @@ class _SentImagesState extends State<SentImages> {
   }
 
   Future<void> _downloadImage() async {
-    setState(() {
-    });
+    setState(() {});
     final snackBar = SnackBar(
       content: const Text('Saving image...'),
       duration: const Duration(seconds: 2),
@@ -679,12 +679,10 @@ class _SentImagesState extends State<SentImages> {
       // Write the image data to the file
       await file.writeAsBytes(response.bodyBytes);
 
-      setState(() {
-      });
+      setState(() {});
     } catch (e) {
       print('errrororooroororr: $e');
-      setState(() {
-      });
+      setState(() {});
     }
   }
 

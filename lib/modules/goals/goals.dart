@@ -41,7 +41,7 @@ class _ViewGoalsState extends State<ViewGoals> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -116,7 +116,7 @@ class _ViewGoalsState extends State<ViewGoals> {
                       return Container(
                         margin: const EdgeInsets.all(14),
                         decoration: BoxDecoration(
-                            color: Colors.grey[300],
+                            color: Theme.of(context).colorScheme.inversePrimary,
                             borderRadius:
                                 const BorderRadius.all(Radius.circular(10))),
                         // height: 200,

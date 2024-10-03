@@ -20,16 +20,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Sober Stem',
       theme: ThemeData(
        
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.deepPurple,
-          primary: Colors.green,
+          primary: Colors.green[700],
           secondary: Colors.amber,
-          background: const Color.fromARGB(255, 7, 148, 12),
+          background: Colors.grey[300],
           tertiary: Colors.grey[200],
           error: const Color(0xFFD6006B),
+          inversePrimary: Colors.grey[400],
           ),
 
         useMaterial3: true,

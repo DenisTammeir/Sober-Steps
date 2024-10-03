@@ -12,7 +12,7 @@ class MilestoneCard extends StatelessWidget {
     return ListView.builder(
         itemCount: daysSober >= 10 ? 10 : daysSober,
         shrinkWrap: true,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {
           // Calculate the day to display (starting from the latest)
           int day = daysSober - index;
@@ -55,8 +55,8 @@ class MilestoneCard extends StatelessWidget {
           }
 
           return Container(
-            padding: EdgeInsets.all(16.0),
-            margin: EdgeInsets.symmetric(vertical: 8.0),
+            padding: const EdgeInsets.all(16.0),
+            margin: const EdgeInsets.symmetric(vertical: 8.0),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(12.0),
@@ -65,58 +65,47 @@ class MilestoneCard extends StatelessWidget {
                   color: Colors.grey.withOpacity(0.3),
                   spreadRadius: 2,
                   blurRadius: 5,
-                  offset: Offset(0, 3),
+                  offset: const Offset(0, 3),
                 ),
               ],
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Row(
-                  children: [
-                    Icon(
+                    const Icon(
                       Icons.calendar_today,
                       color: Colors.blue,
                     ),
-                    SizedBox(width: 8.0),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          'Day $day',
-                          style: TextStyle(
-                            fontSize: 18.0,
-                            fontWeight: FontWeight.bold,
+                    const SizedBox(width: 8.0),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Day $day',
+                            style: const TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                        Text(
-                          description,
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Colors.grey[600],
+                          Text(
+                            description,
+                            style: TextStyle(
+                              fontSize: 16.0,
+                              color: Colors.grey[600],
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    // Text(
-                    //   '$daysSober', // Display the number of days sober
-                    //   style: TextStyle(
-                    //     fontSize: 16.0,
-                    //     fontWeight: FontWeight.bold,
-                    //   ),
-                    // ),
-                    SizedBox(width: 4.0),
+                
+                    const SizedBox(width: 4.0),
                     Icon(
                       Icons.emoji_events, // Trophy icon
                       color: Colors.yellow[700],
                       size: 36,
                     ),
-                  ],
-                ),
+                 
               ],
             ),
           );

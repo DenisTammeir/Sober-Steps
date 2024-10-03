@@ -205,7 +205,7 @@ class _SignUpPageState extends State<SignUpPage> {
                           },
                           child:  Text('Sign Up',
                            style: TextStyle(
-                              color: Colors.grey[100],
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),

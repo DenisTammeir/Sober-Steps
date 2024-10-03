@@ -124,7 +124,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.primary,
         leading: Builder(
           builder: (context) => IconButton(
               onPressed: () {
@@ -176,12 +176,24 @@ class _HomeState extends State<Home> {
                   Column(
                     children: [
                       Container(
-                        padding: const EdgeInsets.all(20.0),
-                        margin: const EdgeInsets.fromLTRB(0, 40, 0, 0),
-                        height: MediaQuery.of(context).size.height - 400,
-                        child: Stack(
+                        // padding: const EdgeInsets.all(20.0),
+                        padding: const EdgeInsets.fromLTRB(20, 60, 20, 20),
+
+                        decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primary,
+                            borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(40),
+                              bottomRight: Radius.circular(40),
+                            )),
+                        // height: MediaQuery.of(context).size.height - 400,
+                        child: Column(
                           children: [
-                            Positioned(child: Reviews()),
+                            // Positioned(child:
+                            const Reviews(),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            // ),
                             Center(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -229,6 +241,9 @@ class _HomeState extends State<Home> {
                                 ],
                               ),
                             ),
+                            const SizedBox(
+                              height: 40,
+                            ),
                           ],
                         ),
                       ),
@@ -255,7 +270,7 @@ class _HomeState extends State<Home> {
             : Column(
                 children: [
                   Container(
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                     height: 25,
                     color: Colors.grey,
                   ),
@@ -331,22 +346,23 @@ class _HomeState extends State<Home> {
                     height: 30,
                   ),
                   Container(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                         border: Border.all(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.primary,
                             width: 2,
                             style: BorderStyle.solid),
-                        borderRadius: BorderRadius.all(Radius.circular(12))),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(12))),
                     child: IconButton(
                         onPressed: () =>
                             Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => SobrietyUpdatePage(),
                             )),
-                        icon: const Icon(
+                        icon:  Icon(
                           Icons.edit_calendar_outlined,
                           size: 40,
-                          color: Colors.white,
+                          color: Theme.of(context).colorScheme.primary,
                         )),
                   )
                 ],

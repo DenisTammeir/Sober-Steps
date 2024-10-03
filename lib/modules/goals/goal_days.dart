@@ -9,7 +9,7 @@ class DaysListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 2,
-         backgroundColor: Theme.of(context).colorScheme.background,
+         backgroundColor: Theme.of(context).colorScheme.primary,
         //  elevation: 3,
          title: Text('   Goals',
          style: TextStyle(
@@ -122,7 +122,7 @@ class DayTile extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(22, 3, 22, 3),
       height: 46,
       decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: Theme.of(context).colorScheme.inversePrimary,
           borderRadius: const BorderRadius.all(Radius.circular(10))),
       child: ListTile(
         onTap: () => Navigator.of(context).push(MaterialPageRoute(

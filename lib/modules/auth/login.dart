@@ -44,7 +44,7 @@ class _LoginPageState extends State<LoginPage> {
     final snackBar = SnackBar(
       content: const Text('No user found.'),
       duration: const Duration(seconds: 3),
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Colors.grey[500],
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -53,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
     final snackBar = SnackBar(
       content: const Text('Wrong password.'),
       duration: const Duration(seconds: 3),
-      backgroundColor: Theme.of(context).indicatorColor,
+      backgroundColor: Theme.of(context).colorScheme.primary,
     );
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
@@ -87,6 +87,7 @@ class _LoginPageState extends State<LoginPage> {
             MaterialPageRoute(builder: (context) => VerificationAuth()));
       }
     } on FirebaseAuthException catch (e) {
+      
       Navigator.pop(context);
       if (e.code == 'user-not-found') {
         // Username Test
@@ -211,9 +212,9 @@ class _LoginPageState extends State<LoginPage> {
                             }
                           },
                           child: Text(
-                            'Log In',
+                            'Login',
                             style: TextStyle(
-                              color: Colors.grey[100],
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
                         ),
